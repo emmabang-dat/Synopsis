@@ -28,6 +28,8 @@ const POST_GRAPHQL_FIELDS = `
   }
 `;
 
+
+
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -117,4 +119,33 @@ export async function getPostAndMorePosts(
     post: extractPost(entry),
     morePosts: extractPostEntries(entries),
   };
+}
+
+const ABOUT_GRAPHQL_FIELDS = `
+  internalName
+  image {
+    url
+  }
+  aboutHeader
+  aboutText {
+    json
+  }
+`;
+
+function extractAbout(fetchResponse: any): any {
+  return fetchResponse?.data?.about?.items?.[0];
+}
+
+export async function getAboutContent(preview: boolean): Promise<any> {
+  const entry = await fetchGraphQL(
+    `query {
+      about(preview: ${preview ? "true" : "false"}, limit: 1) {
+        items {
+          ${ABOUT_GRAPHQL_FIELDS}
+        }
+      }
+    }`,
+    preview,
+  );
+  return extractAbout(entry);
 }

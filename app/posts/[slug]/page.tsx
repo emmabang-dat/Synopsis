@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { draftMode } from "next/headers";
 
-import MoreStories from "../../more-stories";
 import Avatar from "../../avatar";
 import Date from "../../date";
 import CoverImage from "../../cover-image";
@@ -63,7 +62,6 @@ export default async function PostPage({
         </div>
       </article>
       <hr className="border-accent-2 mt-28 mb-24" />
-      <MoreStories morePosts={morePosts} />
     </div>
   );
 }
