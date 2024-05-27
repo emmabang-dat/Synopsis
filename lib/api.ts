@@ -1,12 +1,3 @@
-const ABOUT_GRAPHQL_FIELDS = `
-  internalName
-  image {
-    url
-  }
-  aboutHeader
-  aboutText
-`;
-
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
@@ -24,6 +15,14 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
     }
   ).then((response) => response.json());
 }
+const ABOUT_GRAPHQL_FIELDS = `
+  internalName
+  image {
+    url
+  }
+  aboutHeader
+  aboutText
+`;
 
 function extractAbout(fetchResponse: any): any {
   return fetchResponse?.data?.aboutCollection?.items?.[0];
@@ -48,6 +47,9 @@ const EXPERIENCE_GRAPHQL_FIELDS = `
   company
   period
   description
+  image {
+    url
+  }
 `;
 
 function extractExperience(fetchResponse: any): any {
@@ -90,7 +92,6 @@ export async function getFooterData(): Promise<any> {
   );
   return extractFooter(entries);
 }
-
 
 const HEADER_GRAPHQL_FIELDS = `
   internalName

@@ -12,20 +12,38 @@ export default async function Experience() {
         </h2>
         <div className="space-y-8 md:space-y-10 lg:space-y-12">
           {experienceData.map((experience: any, index: number) => (
-            <div key={index}>
-              <h3 className="text-2xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3 lg:mb-4">
-                {experience.title}
-              </h3>
-              <p className="text-gray-600 mb-2 md:mb-3 lg:mb-4">
-                {experience.company} | {experience.period}
-              </p>
-              <ul className="space-y-2 md:space-y-3 lg:space-y-4">
-                {experience.description
-                  .split("\n")
-                  .map((paragraph: string, index: number) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-              </ul>
+            <div
+              key={index}
+              className="flex flex-wrap md:flex-nowrap space-y-4 md:space-y-0 md:space-x-4"
+            >
+              <div className="flex-1">
+                <h3 className="text-2xl md:text-2xl lg:text-3xl font-bold mb-2 md:mb-3 lg:mb-4">
+                  {experience.title}
+                </h3>
+                <p className="text-gray-600 mb-2 md:mb-3 lg:mb-4">
+                  {experience.company} | {experience.period}
+                </p>
+                <ul className="space-y-2 md:space-y-3 lg:space-y-4">
+                  {experience.description
+                    .split("\n")
+                    .map((paragraph: string, index: number) => (
+                      <p key={index}>{paragraph}</p>
+                    ))}
+                </ul>
+              </div>
+              <div className="flex-shrink-0">
+                <img
+                  alt="Experience data"
+                  className="rounded-3xl"
+                  height="350"
+                  src={experience?.image?.url}
+                  style={{
+                    aspectRatio: "350/350",
+                    objectFit: "cover",
+                  }}
+                  width="350"
+                />
+              </div>
             </div>
           ))}
         </div>
