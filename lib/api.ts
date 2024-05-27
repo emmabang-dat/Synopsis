@@ -90,3 +90,26 @@ export async function getFooterData(): Promise<any> {
   );
   return extractFooter(entries);
 }
+
+
+const HEADER_GRAPHQL_FIELDS = `
+  internalName
+  headerText
+`;
+
+function extractHeader(fetchResponse: any): any {
+  return fetchResponse?.data?.headerCollection?.items?.[0];
+}
+
+export async function getHeaderData(): Promise<any> {
+  const entries = await fetchGraphQL(
+    `query {
+      headerCollection(limit: 1) {
+        items {
+          ${HEADER_GRAPHQL_FIELDS}
+        }
+      }
+    }`
+  );
+  return extractHeader(entries);
+}

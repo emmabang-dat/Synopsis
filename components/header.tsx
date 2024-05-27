@@ -1,13 +1,14 @@
+import { getHeaderData } from "@/lib/api";
 import React from "react";
 
-function Header() {
+export default async function Header() {
+  const headerData = await getHeaderData();
+  
   return (
-    <header className="bg-gray-900 text-white py-4 px-6 md:px-8 lg:px-10 flex justify-between items-center">
+    <header className="bg-orange-400 text-white py-8 px-6 md:px-8 lg:px-10 flex justify-between items-center">
       <div className="text-4xl font-semibold">
-        <h1>John Doe</h1>
+        <h1>{headerData?.headerText}</h1>
       </div>
     </header>
   );
 }
-
-export default Header;
