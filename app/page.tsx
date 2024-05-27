@@ -1,13 +1,11 @@
-import About from "./about/page";
-
+import About from "@/components/about";
+import Experience from "@/components/experience";
 
 export default async function Page() {
-
-
-
   return (
-    <div className="container mx-auto px-5">
+    <div className="">
       <About />
+      <Experience />
     </div>
   );
 }

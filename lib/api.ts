@@ -1,34 +1,11 @@
-const POST_GRAPHQL_FIELDS = `
-  slug
-  title
-  coverImage {
+const ABOUT_GRAPHQL_FIELDS = `
+  internalName
+  image {
     url
   }
-  date
-  author {
-    name
-    picture {
-      url
-    }
-  }
-  excerpt
-  content {
-    json
-    links {
-      assets {
-        block {
-          sys {
-            id
-          }
-          url
-          description
-        }
-      }
-    }
-  }
+  aboutHeader
+  aboutText
 `;
-
-
 
 async function fetchGraphQL(query: string, preview = false): Promise<any> {
   return fetch(
@@ -44,108 +21,72 @@ async function fetchGraphQL(query: string, preview = false): Promise<any> {
         }`,
       },
       body: JSON.stringify({ query }),
-      next: { tags: ["posts"] },
-    },
+    }
   ).then((response) => response.json());
 }
 
-function extractPost(fetchResponse: any): any {
-  return fetchResponse?.data?.postCollection?.items?.[0];
-}
-
-function extractPostEntries(fetchResponse: any): any[] {
-  return fetchResponse?.data?.postCollection?.items;
-}
-
-export async function getPreviewPostBySlug(slug: string | null): Promise<any> {
-  const entry = await fetchGraphQL(
-    `query {
-      postCollection(where: { slug: "${slug}" }, preview: true, limit: 1) {
-        items {
-          ${POST_GRAPHQL_FIELDS}
-        }
-      }
-    }`,
-    true,
-  );
-  return extractPost(entry);
-}
-
-export async function getAllPosts(isDraftMode: boolean): Promise<any[]> {
-  const entries = await fetchGraphQL(
-    `query {
-      postCollection(where: { slug_exists: true }, order: date_DESC, preview: ${
-        isDraftMode ? "true" : "false"
-      }) {
-        items {
-          ${POST_GRAPHQL_FIELDS}
-        }
-      }
-    }`,
-    isDraftMode,
-  );
-  return extractPostEntries(entries);
-}
-
-export async function getPostAndMorePosts(
-  slug: string,
-  preview: boolean,
-): Promise<any> {
-  const entry = await fetchGraphQL(
-    `query {
-      postCollection(where: { slug: "${slug}" }, preview: ${
-      preview ? "true" : "false"
-    }, limit: 1) {
-        items {
-          ${POST_GRAPHQL_FIELDS}
-        }
-      }
-    }`,
-    preview,
-  );
-  const entries = await fetchGraphQL(
-    `query {
-      postCollection(where: { slug_not_in: "${slug}" }, order: date_DESC, preview: ${
-      preview ? "true" : "false"
-    }, limit: 2) {
-        items {
-          ${POST_GRAPHQL_FIELDS}
-        }
-      }
-    }`,
-    preview,
-  );
-  return {
-    post: extractPost(entry),
-    morePosts: extractPostEntries(entries),
-  };
-}
-
-const ABOUT_GRAPHQL_FIELDS = `
-  internalName
-  image {
-    url
-  }
-  aboutHeader
-  aboutText {
-    json
-  }
-`;
-
 function extractAbout(fetchResponse: any): any {
-  return fetchResponse?.data?.about?.items?.[0];
+  return fetchResponse?.data?.aboutCollection?.items?.[0];
 }
 
-export async function getAboutContent(preview: boolean): Promise<any> {
+export async function getAboutData(): Promise<any> {
   const entry = await fetchGraphQL(
     `query {
-      about(preview: ${preview ? "true" : "false"}, limit: 1) {
+      aboutCollection(limit: 1) {
         items {
           ${ABOUT_GRAPHQL_FIELDS}
         }
       }
-    }`,
-    preview,
+    }`
   );
   return extractAbout(entry);
+}
+
+const EXPERIENCE_GRAPHQL_FIELDS = `
+  internalName
+  title
+  company
+  period
+  description
+`;
+
+function extractExperience(fetchResponse: any): any {
+  return fetchResponse?.data?.experienceCollection?.items;
+}
+
+export async function getExperienceData(): Promise<any> {
+  const entries = await fetchGraphQL(
+    `query {
+      experienceCollection(limit: 5) {
+        items {
+          ${EXPERIENCE_GRAPHQL_FIELDS}
+        }
+      }
+    }`
+  );
+  return extractExperience(entries);
+}
+
+const FOOTER_GRAPHQL_FIELDS = `
+  internalName
+  footerText
+  githubLink
+  linkedinLink
+`;
+
+function extractFooter(fetchResponse: any): any {
+  return fetchResponse?.data?.footerCollection?.items?.[0];
+}
+
+export async function getFooterData(): Promise<any> {
+  const entries = await fetchGraphQL(
+    `query {
+      footerCollection(limit: 1) {
+        items {
+          ${FOOTER_GRAPHQL_FIELDS}
+        }
+      }
+    }`
+  );
+  return extractFooter(entries);
 }
