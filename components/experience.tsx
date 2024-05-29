@@ -35,13 +35,13 @@ export default async function Experience() {
                 <img
                   alt="Experience data"
                   className="rounded-3xl"
-                  height="350"
+                  height="250"
                   src={experience?.image?.url}
                   style={{
-                    aspectRatio: "350/350",
+                    aspectRatio: "250/250",
                     objectFit: "cover",
                   }}
-                  width="350"
+                  width="250"
                 />
               </div>
             </div>
