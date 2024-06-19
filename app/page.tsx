@@ -1,3 +1,4 @@
+import ContactForm from "@/components/ContactForm";
 import About from "@/components/about";
 import Experience from "@/components/experience";
 
@@ -6,6 +7,7 @@ export default async function Page() {
     <div className="">
       <About />
       <Experience />
+      <ContactForm />
     </div>
   );
 }
