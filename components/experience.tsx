@@ -1,17 +1,6 @@
 import React from "react";
 import { getExperienceData } from "@/lib/api";
 
-export async function getStaticProps() {
-  const experienceData = await getExperienceData();
-
-  return {
-    props: {
-      experienceData,
-    },
-    revalidate: 2,
-  };
-}
-
 export default async function Experience() {
   const experienceData = await getExperienceData();
 
