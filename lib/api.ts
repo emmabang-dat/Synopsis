@@ -22,6 +22,7 @@ const ABOUT_GRAPHQL_FIELDS = `
   }
   aboutHeader
   aboutText
+  backgroundColor
 `;
 
 function extractAbout(fetchResponse: any): any {
@@ -66,12 +67,14 @@ export async function getExperienceData(): Promise<any> {
       }
     }`
   );
+  
   return extractExperience(entries);
 }
 
 const FOOTER_GRAPHQL_FIELDS = `
   internalName
   footerText
+  backgroundColor
   githubLink
   linkedinLink
 `;
@@ -90,12 +93,14 @@ export async function getFooterData(): Promise<any> {
       }
     }`
   );
+
   return extractFooter(entries);
 }
 
 const HEADER_GRAPHQL_FIELDS = `
   internalName
   headerText
+  backgroundColor
 `;
 
 function extractHeader(fetchResponse: any): any {

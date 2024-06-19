@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 import typography from "@tailwindcss/typography";
+import { colors } from "./theme/color";
 
 export default {
   content: [
@@ -11,6 +12,9 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-inter)"],
+      },
+      backgroundColor: {
+        ...colors,
       },
     },
   },

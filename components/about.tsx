@@ -4,7 +4,11 @@ export default async function About() {
   const aboutData = await getAboutData();
 
   return (
-    <section className="bg-gray-100 py-12 md:py-16 lg:py-20" id="about">
+    <section
+      style={{ backgroundColor: aboutData.backgroundColor.value }}
+      className="py-12 md:py-16 lg:py-20"
+      id="about"
+    >
       <div className="container mx-auto">
         <div className="px-4 md:px-6 lg:px-8">
           <div className="flex flex-row gap-8">
